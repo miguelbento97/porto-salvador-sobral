@@ -753,6 +753,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .crow .cb{background:#f4f6fa;border-radius:7px;padding:3px 8px;font-weight:700}
   .crow .cb.claude{background:#efe9ff;color:#5b34c9}
   .navail{color:var(--rose);font-weight:700}
+  .dirbox{background:var(--teal-soft);border:1px solid #c4e6e0;color:#0b6e64;border-radius:10px;
+    padding:7px 10px;font-size:11px;line-height:1.45;margin-top:8px}
+  .dirbox b{color:var(--teal)}
+  .dirbox .save{display:inline-block;background:var(--teal);color:#fff;border-radius:6px;padding:1px 6px;
+    font-weight:800;font-size:10px;margin-left:4px}
 
   .legend-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:16px 0 8px}
   .legend-box h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);margin-bottom:8px}
@@ -1045,6 +1050,13 @@ const IMG={
  uma:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/447162359.webp?k=f15fcd22d89571b8964d8e3732816c9f17593dc69b66c39b29efd38fb9521f47&o=',
  findme:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/845066210.webp?k=d6728e27884a25e3d87a98551aef25e001b4e8db1414dd252d83bff770fd2f27&o='
 };
+const DIR={
+ jupiter:{txt:'165€ só alojamento (condições de cancelamento por confirmar)', save:'−20€ vs Booking'},
+ eurostars:{txt:'Star Traveler (grátis): só alojamento 174,40€ sem reembolso · 196,20€ reembolsável | com pequeno-almoço 212,80€ · 239,40€ (taxa turística à parte)', save:'−30€ vs Booking'},
+ axisporto:{txt:'Twin varanda: só alojamento 146,21€ reembolsável · com pequeno-almoço 192,38€ reembolsável · 186,30€ sem reembolso (taxa turística à parte)', save:'−28€ vs Booking'},
+ vermar:{txt:'Twin cidade com pequeno-almoço: 157,32€ sem reembolso · 162,45€ reembolsável (taxa turística à parte)', save:'−24€ vs Booking'},
+ gaia:{txt:'Studio: só alojamento 138,60€ sem reembolso · 154€ reembolsável | com pequeno-almoço 186,30€ · 207€. No mesmo edifício, Holiday Inn direto (membro IHG): desde 85€/noite', save:'−9 a −25€ vs Booking'}
+};
 const CANC={jupiter:'26 fev',santana:'3 mar',gaia:'4 mar',axisporto:'2 mar',eurostars:'3 mar',
  palacio:'4 mar',vermar:'26 fev',uma:'2 mar',findme:'28 fev'};
 const HOURS={jupiter:['15:00','12:00'],santana:['15:00','12:00'],gaia:['15:00','12:00'],
@@ -1066,7 +1078,7 @@ const distKm=ll=>{const R=6371,dLa=(ll[0]-CDM[0])*Math.PI/180,dLo=(ll[1]-CDM[1])
   const a=Math.sin(dLa/2)**2+Math.cos(CDM[0]*Math.PI/180)*Math.cos(ll[0]*Math.PI/180)*Math.sin(dLo/2)**2;
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));};
 HOTELS.forEach(h=>{h.cr=CR[h.id][0];h.crWhy=CR[h.id][1];h.dist=distKm(h.ll);h.img=IMG[h.id];
-  h.canc=CANC[h.id];h.ci=HOURS[h.id][0];h.co=HOURS[h.id][1];h.amen=AMEN[h.id];});
+  h.canc=CANC[h.id];h.ci=HOURS[h.id][0];h.co=HOURS[h.id][1];h.amen=AMEN[h.id];h.dir=DIR[h.id]||null;});
 
 const POIS = [
  {name:'Casa da Música', ll:[41.1584,-8.6307], cls:'music', emo:'🎵',
@@ -1155,6 +1167,7 @@ HOTELS.forEach(h=>{
     <div class="ppsub">⭐ ${h.score} Booking · 🤖 ${h.cr} Claude · ${h.dist.toFixed(1)} km da Casa da Música<br>🕒 check-in ${h.ci} · check-out ${h.co}</div>
     <table>${rows}</table>
     <div class="meta">${h.note}</div>
+    ${h.dir?`<div class="meta" style="color:#0b6e64;font-weight:600">🏷️ Direto no site oficial: ${h.dir.txt} (${h.dir.save})</div>`:''}
     <div class="meta" style="font-style:italic">🤖 «${h.crWhy}»</div>
     ${h.warn?`<div class="warn">⚠️ ${h.warn}</div>`:''}
     <a href="${BK(h.slug)}" target="_blank">Abrir no Booking ↗</a></div>`;
@@ -1190,6 +1203,7 @@ function cardContent(h){
       <span class="cb">🕒 ${h.ci} → ${h.co}</span>
       <span class="cb claude" title="${h.crWhy.replace(/"/g,'&quot;')}">🤖 nota Claude ${h.cr}</span>
     </div>
+    ${h.dir?`<div class="dirbox">🏷️ <b>Direto no site oficial:</b> ${h.dir.txt}<span class="save">${h.dir.save}</span></div>`:''}
     </div>`;
 }
 HOTELS.forEach(h=>{
@@ -1267,7 +1281,7 @@ function buildTable(){
   const TH=(c,label,cls='')=>`<th class="sortable ${cls}" data-col="${c}">${label}${arrow(c)}</th>`;
   const head=`<tr>${TH('name','Hotel')}${TH('score','⭐ Booking')}${TH('cr','🤖 Claude')}${TH('dist','📍 Casa da Música')}
     ${cols.map(([ck,cl])=>TH(ck,cl,ck===k?'selcol':'')).join('')}
-    ${TH('hours','🕒 Check-in / out')}<th>Comodidades</th><th></th></tr>`;
+    ${TH('hours','🕒 Check-in / out')}<th>🏷️ Site oficial (2 noites)</th><th>Comodidades</th><th></th></tr>`;
   let list=HOTELS.slice();
   if(tSort.col){const g=GET[tSort.col];list.sort((a,b)=>{const x=g(a),y=g(b);return (x<y?-1:x>y?1:0)*tSort.dir;});}
   else list.sort(SORTS[sortMode]);
@@ -1285,6 +1299,7 @@ function buildTable(){
       <td>${h.dist.toFixed(1)} km</td>
       ${cells}
       <td style="white-space:nowrap">${h.ci} → ${h.co}</td>
+      <td class="tamen" style="min-width:200px">${h.dir?h.dir.txt+' ('+h.dir.save+')':'—'}</td>
       <td class="tamen">${h.amen.join(' · ')}</td>
       <td><a class="tlink" href="${BK(h.slug)}" target="_blank">Booking ↗</a></td>
     </tr>`;
