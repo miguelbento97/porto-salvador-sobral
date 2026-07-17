@@ -738,6 +738,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .b.amber{background:var(--amber-soft);color:var(--amber)}
   .b.rose{background:var(--rose-soft);color:var(--rose)}
   .b.gray{background:#eef0f4;color:var(--ink2)}
+  .b.new{background:#efe9ff;color:#5b34c9;border:1px dashed #b9a5f2}
   .bigprice{display:flex;align-items:center;gap:10px;background:#f4f6fa;border-radius:12px;padding:9px 12px;margin-top:2px}
   .bigprice .bp{font-size:24px;font-weight:800;color:var(--ink)}
   .bigprice .bps{font-size:11.5px;color:var(--ink2);line-height:1.35}
@@ -886,7 +887,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <body>
 <header id="topbar">
   <button id="hamb" aria-label="Abrir menu">☰</button>
-  <div id="tbTitle">Porto · Salvador Sobral<span>5–7 março 2027 · 9 hotéis</span></div>
+  <div id="tbTitle">Porto · Salvador Sobral<span>5–7 março 2027 · 13 alojamentos</span></div>
   <div id="tbViews"><button id="vMapM" class="on" aria-label="Mapa">🗺️</button><button id="vTableM" aria-label="Tabela">📋</button></div>
 </header>
 <div id="mtoggles">
@@ -899,7 +900,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <button id="sideClose">✕ Fechar menu</button>
     <div class="kicker">Fim de semana · 5–7 março 2027</div>
     <h1>Porto — Salvador Sobral 🎶</h1>
-    <div class="sub">9 hotéis da tua lista Booking · preços <b>por noite</b> (2 adultos, quarto base, desconto Genius incluído)</div>
+    <div class="sub">13 alojamentos (9 da tua lista Booking + 4 novas adições a pé da Casa da Música) · preços <b>por noite</b> (2 adultos, quarto base, desconto Genius incluído)</div>
     <div class="note">💡 <b>Atenção às piscinas:</b> no Jupiter o rooftop está fechado em março (a interior funciona); na UMA a piscina exterior está <b>fechada</b>; no Gaia Residence, Axis Porto, Porto Palácio <b>e Jupiter (Aqua Soul: 20€/90min)</b> o acesso à piscina/spa é <b>pago à parte</b>.</div>
 
     <div class="viewsw">
@@ -1024,7 +1025,35 @@ const HOTELS = [
   night:51, pool:false, cheap:true, metro:true,
   prices:{snr:101, scg:107, cnr:null, ccg:null},
   badges:[['rose','sem piscina/spa'],['teal','−28% limited deal 🔥'],['teal','kitchenette ✓']],
-  note:'O mais barato dos 9. Estúdios renovados; metro Heroísmo/Campo 24 de Agosto a 450 m; comboio de Campanhã a 750 m (ideal para chegar de Lisboa). Não serve pequeno-almoço.',
+  note:'Estúdios baratos e renovados; metro Heroísmo/Campo 24 de Agosto a 450 m; comboio de Campanhã a 750 m (ideal para chegar de Lisboa). Não serve pequeno-almoço.',
+  warn:null},
+ {id:'boavistagh', name:'Boavista Guest House', slug:'cesar-residencial',
+  ll:[41.156544,-8.621202], score:8.9, zone:'Cedofeita · metro Carolina Michaëlis a 100 m', cat:'rose',
+  night:56, pool:false, cheap:true, metro:true,
+  prices:{snr:111, scg:120, cnr:null, ccg:132},
+  badges:[['new','🆕 nova adição'],['teal','pequeno-almoço excelente ✓'],['teal','1.936 avaliações'],['teal','66€/noite com tudo 🔥']],
+  note:'O melhor valor da zona: 132€ as 2 noites COM pequeno-almoço excelente e reembolso até 3 mar (paga-se no hotel). Genius −10% já aplicado. Terraço, bar, receção 24h. 10 min a pé da Casa da Música.',
+  warn:null},
+ {id:'hfalasul', name:'HF Ala Sul', slug:'hf-ala-sul',
+  ll:[41.15412,-8.630533], score:8.3, zone:'Boavista · 350 m da Casa da Música', cat:'rose',
+  night:70, pool:false, cheap:true, metro:true,
+  prices:{snr:null, scg:140, cnr:null, ccg:168},
+  badges:[['new','🆕 nova adição'],['teal','5 min a pé do concerto'],['teal','pequeno-almoço maravilhoso ✓'],['gray','hotel novo (HF)']],
+  note:'Hotel HF recente com restaurante e estacionamento privado. Tarifas com reembolso grátis até 2 mar e sem pré-pagamento (pagas no hotel). Quartos compactos (16-19 m²).',
+  warn:null},
+ {id:'barao', name:'Casa Barão Forrester', slug:'casa-barao-forrester',
+  ll:[41.159723,-8.620807], score:9.5, zone:'Cedofeita · rua tranquila', cat:'rose',
+  night:77, pool:false, cheap:true, metro:true,
+  prices:{snr:153, scg:168, cnr:null, ccg:null},
+  badges:[['new','🆕 nova adição'],['teal','9.5 — a melhor nota da zona'],['gray','apartamento com cozinha'],['rose','sem pequeno-almoço servido']],
+  note:'Apartamento T1 no rés-do-chão (40 m²) com cozinha completa, máquina de lavar loiça e ar condicionado. 12 min a pé da Casa da Música. Há também tarifa reembolsável até 4 mar por 184€.',
+  warn:null},
+ {id:'portomusic', name:'Porto Music Guest House', slug:'porto-music-guest-house',
+  ll:[41.158076,-8.630851], score:9.1, zone:'Av. da Boavista · em frente à Casa da Música', cat:'rose',
+  night:92, pool:false, cheap:false, metro:true, paIncluded:true,
+  prices:{snr:null, scg:null, cnr:183, ccg:192},
+  badges:[['new','🆕 nova adição'],['teal','100 m do concerto 🎯'],['teal','pequeno-almoço maravilhoso sempre incluído']],
+  note:'Literalmente do outro lado da avenida da Casa da Música — 2 minutos a pé. Todas as tarifas incluem pequeno-almoço; a reembolsável (até 3 mar) custa 192€ e paga-se no hotel.',
   warn:null}
 ];
 
@@ -1037,9 +1066,17 @@ const CR={
  vermar:[7.2,'Frente-mar com pequeno-almoço incluído, mas o metro a 2,4 km mata a regra "sem Uber". Melhor para verão.'],
  uma:[7.0,'Sítio lindo e Genius −20%, mas vender "Pool" com a piscina fechada em março é marketing — em março é só um bom apartamento.'],
  gaia:[6.8,'Bom studio, mas pagar entrada na piscina do próprio hotel num fim de semana de spa não faz sentido.'],
+ boavistagh:[9.2,'A pechincha inteligente: 66€/noite com pequeno-almoço excelente incluído, reembolsável, e metro à porta. Sem glamour, mas tudo certo — o novo rei do custo-benefício.'],
+ hfalasul:[8.6,'Cama boa e buffet HF a 5 minutos a pé do concerto — o prático absoluto. Só os quartos é que são pequenos.'],
+ barao:[8.8,'Nota 9.5 e apartamento impecável com cozinha, mas sem pequeno-almoço servido — metade do brief fica por cumprir.'],
+ portomusic:[8.4,'Os 92€/noite compram uma coisa única: acordar em frente à Casa da Música com pequeno-almoço incluído. Puro imobiliário.'],
  axisporto:[6.5,'Sólido e barato com reembolso grátis, mas zona sem alma e spa pago. Só se tudo o resto esgotar.']
 };
 const IMG={
+ boavistagh:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/79989029.webp?k=e1c4c8fd128976321feb0a92f643570c2825533d4c446e66c3fa28f799fe6674&o=',
+ hfalasul:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/821249608.webp?k=f7411622e997a9b3d104580e2c560ba19838c81fc2784ac335e8fceab0b7369d&o=',
+ barao:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/205064425.webp?k=99d4df07cbcf5c2036faebe0be88f0670370839e8e9bb72caaa545db1c53027a&o=',
+ portomusic:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/106149425.webp?k=31215da27d357860bdd91df1638c0c57c998fa798625dea53407ae3c0cb8b54c&o=',
  jupiter:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/880497205.webp?k=9ec6814c70b256ba9068b0f75163d505c15cc525add2e798fee4e230053570e7&o=',
  santana:'https://r-xx.bstatic.com/xdata/images/hotel/608x352/304557578.webp?k=4013c4d3ba21d8eef988ebdae72ad95f6f8a3123bbcf59e9e654660a140e21ee&o=',
  gaia:'https://q-xx.bstatic.com/xdata/images/hotel/608x352/154522202.webp?k=0c0df6f5657a5ea13ee84c5e78d6c0bde01e0d6f775b71b984ea271065aa4824&o=',
@@ -1057,10 +1094,15 @@ const DIR={
  vermar:{txt:'Twin cidade com pequeno-almoço: 157,32€ sem reembolso · 162,45€ reembolsável (taxa turística à parte)', save:'−24€ vs Booking'},
  gaia:{txt:'Studio: só alojamento 138,60€ sem reembolso · 154€ reembolsável | com pequeno-almoço 186,30€ · 207€. No mesmo edifício, Holiday Inn direto (membro IHG): desde 85€/noite', save:'−9 a −25€ vs Booking'},
  santana:{txt:'Motor ainda sem datas 2027 — indicativo (fim de semana nov-dez 2026): Twin só alojamento 139€ · com pequeno-almoço 146€, ambos sem reembolso', save:'≈ −23€ vs Booking'},
- palacio:{txt:'Club UP (registo grátis, −10%) + oferta −15%: Executivo só alojamento 184€ sem reembolso · 201€ reembolsável · pequeno-almoço +51€ (impostos incluídos, taxas à parte)', save:'−22€ vs Booking'}
+ palacio:{txt:'Club UP (registo grátis, −10%) + oferta −15%: Executivo só alojamento 184€ sem reembolso · 201€ reembolsável · pequeno-almoço +51€ (impostos incluídos, taxas à parte)', save:'−22€ vs Booking'},
+ boavistagh:{txt:'Motor oficial: sem pequeno-almoço 118€ · Early Booking com pequeno-almoço 131,70€ · standard 138€ — todos com cancelamento grátis até 48h antes', save:'−2€ vs Booking'},
+ hfalasul:{txt:'Datas 2027 fechadas nos motores; indicativo nov 2026 (site revendedor, não oficial): 123€ só alojamento · 148€ com pequeno-almoço, pré-pagos', save:'indicativo'},
+ barao:{txt:'No revendedor hotelporto.net (não oficial) o preço é igual ao Booking: 153€ sem reembolso · 169€ reembolsável até 25 fev — sem vantagem em sair do Booking', save:'igual ao Booking'},
+ portomusic:{txt:'Motor oficial: 188€ com pequeno-almoço sem reembolso · 208€ reembolsável — aqui o Booking é mais barato (183€/192€)', save:'Booking ganha ✅'}
 };
 const DIRP={
  santana:{snr:139, cnr:146},
+ boavistagh:{scg:118, ccg:131.7},
  jupiter:{snr:165},
  eurostars:{snr:174.4, scg:196.2, cnr:212.8, ccg:239.4},
  axisporto:{scg:146.21, cnr:186.3, ccg:192.38},
@@ -1077,7 +1119,7 @@ const SITE={
  palacio:'https://www.editoryhotels.com/',
  gaia:'https://www.gaiaresidence.pt/'
 };
-const CANC={jupiter:'26 fev',santana:'3 mar',gaia:'4 mar',axisporto:'2 mar',eurostars:'3 mar',
+const CANC={boavistagh:'3 mar',hfalasul:'2 mar',barao:'26 fev',portomusic:'3 mar',jupiter:'26 fev',santana:'3 mar',gaia:'4 mar',axisporto:'2 mar',eurostars:'3 mar',
  palacio:'4 mar',vermar:'26 fev',uma:'2 mar',findme:'28 fev'};
 const HOURS={jupiter:['15:00','12:00'],santana:['15:00','12:00'],gaia:['15:00','12:00'],
  axisporto:['15:00','12:00'],eurostars:['15:00','12:00'],palacio:['15:00','12:00'],
@@ -1091,14 +1133,18 @@ const AMEN={
  palacio:['Piscina interior (só Deluxe+)','Spa & sauna','Ginásio','Restaurante & rooftop bar','Garagem','5 estrelas'],
  vermar:['Piscina interior + exterior','Zona termal (5€/h)','Sauna','Campo de ténis','Restaurante & bar','Estacionamento grátis','Frente-mar'],
  uma:['Ginásio','Kitchenette completa','Lavandaria','Terraço & jardim','Pequeno-almoço em box','Adults only'],
- findme:['Kitchenette completa','Máquina de lavar','Streaming (Netflix)','Terraço & jardim','Aceita animais grátis','Estacionamento pago']
+ findme:['Kitchenette completa','Máquina de lavar','Streaming (Netflix)','Terraço & jardim','Aceita animais grátis','Estacionamento pago'],
+ boavistagh:['Pequeno-almoço excelente (14€ ou incluído)','Bar & terraço','Receção 24h','Elevador','Room service','Aceita animais'],
+ hfalasul:['Pequeno-almoço buffet','Restaurante & bar','Estacionamento privado','Receção 24h','Ar condicionado','Insonorização'],
+ barao:['Cozinha completa','Máquina de lavar loiça','Ar condicionado','Estacionamento','Transfer aeroporto','Entrada privada'],
+ portomusic:['Pequeno-almoço sempre incluído','Terraço & jardim','Room service','Quartos familiares','Ar condicionado']
 };
 const CDM=[41.1584,-8.6307];
 const distKm=ll=>{const R=6371,dLa=(ll[0]-CDM[0])*Math.PI/180,dLo=(ll[1]-CDM[1])*Math.PI/180;
   const a=Math.sin(dLa/2)**2+Math.cos(CDM[0]*Math.PI/180)*Math.cos(ll[0]*Math.PI/180)*Math.sin(dLo/2)**2;
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));};
 HOTELS.forEach(h=>{h.cr=CR[h.id][0];h.crWhy=CR[h.id][1];h.dist=distKm(h.ll);h.img=IMG[h.id];
-  h.canc=CANC[h.id];h.ci=HOURS[h.id][0];h.co=HOURS[h.id][1];h.amen=AMEN[h.id];h.dir=DIR[h.id]||null;h.dirP=DIRP[h.id]||null;});
+  h.canc=CANC[h.id];const hh=HOURS[h.id]||null;h.ci=hh?hh[0]:null;h.co=hh?hh[1]:null;h.amen=AMEN[h.id];h.dir=DIR[h.id]||null;h.dirP=DIRP[h.id]||null;});
 
 const POIS = [
  {name:'Casa da Música', ll:[41.1584,-8.6307], cls:'music', emo:'🎵',
@@ -1189,7 +1235,7 @@ HOTELS.forEach(h=>{
   const html=`<div class="pp">
     <img src="${h.img}" alt="${h.name}">
     <h4>${h.name}</h4>
-    <div class="ppsub">⭐ ${h.score} Booking · 🤖 ${h.cr} Claude · ${h.dist.toFixed(1)} km da Casa da Música<br>🕒 check-in ${h.ci} · check-out ${h.co}</div>
+    <div class="ppsub">⭐ ${h.score} Booking · 🤖 ${h.cr} Claude · ${h.dist.toFixed(1)} km da Casa da Música${h.ci?`<br>🕒 check-in ${h.ci} · check-out ${h.co}`:''}</div>
     <table>${rows}</table>
     <div class="meta">${h.note}</div>
     ${h.dir?`<div class="meta" style="color:#0b6e64;font-weight:600">🏷️ Direto no site oficial: ${h.dir.txt} (${h.dir.save})</div>`:''}
@@ -1229,7 +1275,7 @@ function cardContent(h){
     <div class="amen">${h.amen.map(a=>`<span class="am">${a}</span>`).join('')}</div>
     <div class="crow">
       <span class="cb">📍 ${h.dist.toFixed(1)} km da Casa da Música</span>
-      <span class="cb">🕒 ${h.ci} → ${h.co}</span>
+      ${h.ci?`<span class="cb">🕒 ${h.ci} → ${h.co}</span>`:''}
       <span class="cb claude" title="${h.crWhy.replace(/"/g,'&quot;')}">🤖 nota Claude ${h.cr}</span>
     </div>
     ${h.dir?`<div class="dirbox">🏷️ <b>Direto no site oficial:</b> ${h.dir.txt}<span class="save">${h.dir.save}</span></div>`:''}
@@ -1304,7 +1350,7 @@ function buildTable(){
   const cols=[['snr','Sem pequeno-almoço<br>sem reembolso'],['scg','Sem pequeno-almoço<br>reembolso grátis'],
               ['cnr','Com pequeno-almoço<br>sem reembolso'],['ccg','Com pequeno-almoço<br>reembolso grátis']];
   const GET={name:h=>h.name.toLowerCase(),score:h=>h.score,cr:h=>h.cr,dist:h=>h.dist,
-    snr:h=>h.prices.snr??1e9,scg:h=>h.prices.scg??1e9,cnr:h=>h.prices.cnr??1e9,ccg:h=>h.prices.ccg??1e9,hours:h=>h.ci};
+    snr:h=>h.prices.snr??1e9,scg:h=>h.prices.scg??1e9,cnr:h=>h.prices.cnr??1e9,ccg:h=>h.prices.ccg??1e9,hours:h=>h.ci||'zz'};
   const DESCFIRST={score:1,cr:1};
   const arrow=c=>tSort.col===c?(tSort.dir>0?' ▲':' ▼'):' <span style="opacity:.35">↕</span>';
   const TH=(c,label,cls='')=>`<th class="sortable ${cls}" data-col="${c}">${label}${arrow(c)}</th>`;
@@ -1327,7 +1373,7 @@ function buildTable(){
       <td><b style="color:#5b34c9">${h.cr}</b></td>
       <td>${h.dist.toFixed(1)} km</td>
       ${cells}
-      <td style="white-space:nowrap">${h.ci} → ${h.co}</td>
+      <td style="white-space:nowrap">${h.ci?h.ci+' → '+h.co:'—'}</td>
       <td class="tamen" style="min-width:200px">${h.dir?h.dir.txt+' ('+h.dir.save+')':'—'}</td>
       <td class="tamen">${h.amen.join(' · ')}</td>
       <td style="white-space:nowrap"><a class="tlink" href="${BK(h.slug)}" target="_blank">Booking ↗</a>${SITE[h.id]?`<br><a class="tlink" style="background:var(--teal);display:inline-block;margin-top:4px" href="${SITE[h.id]}" target="_blank">Site ↗</a>`:''}</td>
