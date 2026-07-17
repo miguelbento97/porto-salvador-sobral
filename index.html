@@ -1059,6 +1059,14 @@ const DIR={
  santana:{txt:'Motor ainda sem datas 2027 — indicativo (fim de semana nov-dez 2026): Twin só alojamento 139€ · com pequeno-almoço 146€, ambos sem reembolso', save:'≈ −23€ vs Booking'},
  palacio:{txt:'Club UP (registo grátis, −10%) + oferta −15%: Executivo só alojamento 184€ sem reembolso · 201€ reembolsável · pequeno-almoço +51€ (impostos incluídos, taxas à parte)', save:'−22€ vs Booking'}
 };
+const DIRP={
+ jupiter:{snr:165},
+ eurostars:{snr:174.4, scg:196.2, cnr:212.8, ccg:239.4},
+ axisporto:{scg:146.21, cnr:186.3, ccg:192.38},
+ vermar:{cnr:157.32, ccg:162.45},
+ gaia:{snr:138.6, scg:154, cnr:186.3, ccg:207},
+ palacio:{snr:184, scg:201, cnr:235, ccg:252}
+};
 const SITE={
  jupiter:'https://www.jupiterhotels.com/',
  santana:'https://www.santanahotel.pt/',
@@ -1089,7 +1097,7 @@ const distKm=ll=>{const R=6371,dLa=(ll[0]-CDM[0])*Math.PI/180,dLo=(ll[1]-CDM[1])
   const a=Math.sin(dLa/2)**2+Math.cos(CDM[0]*Math.PI/180)*Math.cos(ll[0]*Math.PI/180)*Math.sin(dLo/2)**2;
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));};
 HOTELS.forEach(h=>{h.cr=CR[h.id][0];h.crWhy=CR[h.id][1];h.dist=distKm(h.ll);h.img=IMG[h.id];
-  h.canc=CANC[h.id];h.ci=HOURS[h.id][0];h.co=HOURS[h.id][1];h.amen=AMEN[h.id];h.dir=DIR[h.id]||null;});
+  h.canc=CANC[h.id];h.ci=HOURS[h.id][0];h.co=HOURS[h.id][1];h.amen=AMEN[h.id];h.dir=DIR[h.id]||null;h.dirP=DIRP[h.id]||null;});
 
 const POIS = [
  {name:'Casa da Música', ll:[41.1584,-8.6307], cls:'music', emo:'🎵',
@@ -1156,10 +1164,15 @@ function priceFor(h){
   if(k&&k.slice(1)!==want.slice(1)) warns.push(state.cg?'sem reembolso grátis nesta tarifa':'só existe com reembolso grátis');
   return {v,k,warns,exact:k===want};
 }
-function pinIcon(h){
+function bestFor(h){
   const pf=priceFor(h);
-  const label=fmtN(pf.v)+'€';
-  const sub='por noite'+(pf.exact?'':' · ⚠ '+pf.warns.join(' · '));
+  const d=(h.dirP&&h.dirP[pf.k]!=null)?h.dirP[pf.k]:null;
+  return {...pf, eff:(d!=null?d:pf.v), src:(d!=null?'site':'booking'), book:pf.v};
+}
+function pinIcon(h){
+  const bf=bestFor(h);
+  const label=fmtN(bf.eff)+'€';
+  const sub='por noite'+(bf.src==='site'?' · site oficial':'')+(bf.exact?'':' · ⚠ '+bf.warns.join(' · '));
   return L.divIcon({className:'',html:`<div class="hpin ${h.cat}"><div class="bub">${label}<small>${sub}</small></div><div class="tip"></div></div>`,iconSize:[92,42],iconAnchor:[46,42]});
 }
 
@@ -1192,16 +1205,19 @@ const cardsEl=document.getElementById('cards');
 const els={};
 let curFilter='all', sortMode='price';
 const SORTS={
-  price:(a,b)=>((priceFor(a).v??1e9)-(priceFor(b).v??1e9)),
+  price:(a,b)=>((bestFor(a).eff??1e9)-(bestFor(b).eff??1e9)),
   score:(a,b)=>b.score-a.score,
   dist:(a,b)=>a.dist-b.dist,
   claude:(a,b)=>b.cr-a.cr
 };
 function cardContent(h){
-  const pf=priceFor(h);
+  const pf=bestFor(h);
   const rateDesc=`${pf.k[0]==='c'?'com':'sem'} pequeno-almoço · ${pf.k.slice(1)==='cg'?`reembolso grátis até ${h.canc}`:'sem reembolso'}`;
-  const priceBlock = `<div class="bigprice"><span class="bp">${fmtN(pf.v)}€</span>
-        <span class="bps">por noite<br>${rateDesc}</span></div>
+  const srcLine=pf.src==='site'
+    ? `<b style="color:var(--teal)">no site oficial</b> · no Booking: ${fmtN(pf.book)}€/noite`
+    : `no Booking`;
+  const priceBlock = `<div class="bigprice"><span class="bp">${fmtN(pf.eff)}€</span>
+        <span class="bps">por noite ${pf.src==='site'?'✅':''}<br>${rateDesc}<br>${srcLine}</span></div>
       ${pf.exact?'':`<div class="fallback">⚠️ ${pf.warns.join(' e ')} — preço mostrado é da tarifa mais próxima</div>`}`;
   return `<img class="himg" src="${h.img}" alt="${h.name}" loading="lazy">
     <div class="cbody">
