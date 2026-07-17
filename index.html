@@ -895,7 +895,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="kicker">Fim de semana · 5–7 março 2027</div>
     <h1>Porto — Salvador Sobral 🎶</h1>
     <div class="sub">9 hotéis da tua lista Booking · preços <b>por noite</b> (2 adultos, quarto base, desconto Genius incluído)</div>
-    <div class="note">💡 <b>Atenção às piscinas:</b> no Jupiter o rooftop está fechado em março (a interior funciona); na UMA a piscina exterior está <b>fechada</b>; no Gaia Residence, Axis Porto e Porto Palácio o acesso à piscina/spa é <b>pago à parte</b>.</div>
+    <div class="note">💡 <b>Atenção às piscinas:</b> no Jupiter o rooftop está fechado em março (a interior funciona); na UMA a piscina exterior está <b>fechada</b>; no Gaia Residence, Axis Porto, Porto Palácio <b>e Jupiter (Aqua Soul: 20€/90min)</b> o acesso à piscina/spa é <b>pago à parte</b>.</div>
 
     <div class="viewsw">
       <button id="vMap" class="on">🗺️ Mapa</button>
@@ -959,12 +959,12 @@ const BK = p => `https://www.booking.com/hotel/pt/${p}.html?checkin=2027-03-05&c
 
 const HOTELS = [
  {id:'jupiter', name:'Jupiter Porto Hotel — Rooftop & Spa', slug:'jupiter-porto-rooftop-amp-spa',
-  ll:[41.154713,-8.627074], score:9.1, zone:'Boavista · 8 min a pé da Casa da Música', cat:'teal',
-  night:93, pool:true, cheap:false, metro:true,
+  ll:[41.154713,-8.627074], score:9.1, zone:'Boavista · 8 min a pé da Casa da Música', cat:'amber',
+  night:93, pool:false, cheap:false, metro:true,
   prices:{snr:185, scg:192, cnr:245, ccg:252},
-  badges:[['teal','piscina interior ✓'],['teal','spa ✓'],['amber','rooftop fechado em mar']],
-  note:'Pequeno-almoço +15€/pessoa/dia se não incluído. Metro Casa da Música a 800 m — o concerto fica a 8 min a pé.',
-  warn:'Piscina exterior do rooftop fechada 1 nov–30 abr (a interior aquecida funciona).'},
+  badges:[['amber','spa/piscina Aqua Soul 20€/90min'],['teal','direto no site: 165€ 🔥'],['amber','rooftop fechado em mar']],
+  note:'Pequeno-almoço +15€/pessoa/dia se não incluído. Metro Casa da Música a 800 m — o concerto fica a 8 min a pé. 💡 No site oficial do hotel o mesmo quarto custa 165€ (2 noites, só alojamento) vs 185€ aqui.',
+  warn:'O Circuito Aqua Soul (piscina aquecida interior, sauna, banho turco) é pago mesmo para hóspedes: 20€/pessoa por 90 min. Rooftop fechado 1 nov–30 abr.'},
  {id:'santana', name:'Santana Hotel & SPA', slug:'hotelsantana',
   ll:[41.350566,-8.735877], score:7.8, zone:'Vila do Conde · rio Ave', cat:'teal',
   night:81, pool:true, cheap:true, metro:true,
@@ -1024,10 +1024,10 @@ const HOTELS = [
 ];
 
 const CR={
- jupiter:[9.5,'O fit perfeito: piscina interior + spa incluídos, 9.1 real, e dormes a 8 min a pé do concerto. Vale cada euro.'],
+ jupiter:[8.7,'Localização imbatível e quarto excelente — mas o Miguel descobriu que o circuito spa/piscina é pago mesmo para hóspedes (20€/90min) e o rooftop está fechado em março. A reservar, direto no site: 165€.'],
  findme:[8.5,'Imbatível em preço e transportes (Campanhã + 2 metros a 450 m). Zero amenities, mas a 50€/noite sobra orçamento para francesinhas.'],
- santana:[8.0,'O vosso clássico: spa a sério incluído e varandas sobre o Ave. Perde pontos pelos ~50 min de metro e nota 7.8.'],
- eurostars:[8.3,'Hotel excelente com piscina+hammam incluídos e o melhor marisco à porta. Só peca por já custar >100€/noite.'],
+ santana:[8.2,'O vosso clássico: spa a sério incluído no preço (jacuzzi, sauna, banho turco) e varandas sobre o Ave. Com o spa do Jupiter pago, volta a ser o rei do relax por euro. Só perde pelos ~50 min de metro.'],
+ eurostars:[8.5,'Sobe no ranking: piscina interior + hammam mesmo incluídos no preço. Com o spa do Jupiter afinal pago, a diferença real quase desaparece.'],
  palacio:[7.5,'5 estrelas com 27% de desconto ao pé da Casa da Música — mas spa pago à parte e pequeno-almoço a 23€ estragam a conta.'],
  vermar:[7.2,'Frente-mar com pequeno-almoço incluído, mas o metro a 2,4 km mata a regra "sem Uber". Melhor para verão.'],
  uma:[7.0,'Sítio lindo e Genius −20%, mas vender "Pool" com a piscina fechada em março é marketing — em março é só um bom apartamento.'],
@@ -1051,7 +1051,7 @@ const HOURS={jupiter:['15:00','12:00'],santana:['15:00','12:00'],gaia:['15:00','
  axisporto:['15:00','12:00'],eurostars:['15:00','12:00'],palacio:['15:00','12:00'],
  vermar:['15:00','12:00'],uma:['15:30','11:00'],findme:['15:00','12:00']};
 const AMEN={
- jupiter:['Piscina interior aquecida','Spa · banho turco','Ginásio','Restaurante & bar','Garagem','Varanda','Ar condicionado'],
+ jupiter:['Circuito spa/piscina Aqua Soul (20€/90min hóspedes)','Sauna · banho turco','Ginásio','Restaurante & bar','Garagem','Varanda','Ar condicionado'],
  santana:['Piscina interior','Jacuzzi · sauna · banho turco','Massagens de casal','Ginásio','Restaurante','Estacionamento grátis','Ar condicionado'],
  gaia:['Piscina interior (paga)','Spa & sauna (pagos)','Ginásio','Kitchenette','Restaurante & bar','Garagem','Aceita animais'],
  axisporto:['Spa & piscina (pagos)','Sauna · banho turco','Varanda em todos os quartos','Restaurante & bar','Garagem','Transfer aeroporto'],
