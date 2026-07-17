@@ -1055,7 +1055,18 @@ const DIR={
  eurostars:{txt:'Star Traveler (grátis): só alojamento 174,40€ sem reembolso · 196,20€ reembolsável | com pequeno-almoço 212,80€ · 239,40€ (taxa turística à parte)', save:'−30€ vs Booking'},
  axisporto:{txt:'Twin varanda: só alojamento 146,21€ reembolsável · com pequeno-almoço 192,38€ reembolsável · 186,30€ sem reembolso (taxa turística à parte)', save:'−28€ vs Booking'},
  vermar:{txt:'Twin cidade com pequeno-almoço: 157,32€ sem reembolso · 162,45€ reembolsável (taxa turística à parte)', save:'−24€ vs Booking'},
- gaia:{txt:'Studio: só alojamento 138,60€ sem reembolso · 154€ reembolsável | com pequeno-almoço 186,30€ · 207€. No mesmo edifício, Holiday Inn direto (membro IHG): desde 85€/noite', save:'−9 a −25€ vs Booking'}
+ gaia:{txt:'Studio: só alojamento 138,60€ sem reembolso · 154€ reembolsável | com pequeno-almoço 186,30€ · 207€. No mesmo edifício, Holiday Inn direto (membro IHG): desde 85€/noite', save:'−9 a −25€ vs Booking'},
+ santana:{txt:'Motor ainda sem datas 2027 — indicativo (fim de semana nov-dez 2026): Twin só alojamento 139€ · com pequeno-almoço 146€, ambos sem reembolso', save:'≈ −23€ vs Booking'},
+ palacio:{txt:'Club UP (registo grátis, −10%) + oferta −15%: Executivo só alojamento 184€ sem reembolso · 201€ reembolsável · pequeno-almoço +51€ (impostos incluídos, taxas à parte)', save:'−22€ vs Booking'}
+};
+const SITE={
+ jupiter:'https://www.jupiterhotels.com/',
+ santana:'https://www.santanahotel.pt/',
+ eurostars:'https://www.eurostarshotels.com.pt/eurostars-matosinhos.html',
+ axisporto:'https://www.axishoteis.com/',
+ vermar:'https://www.axishoteis.com/',
+ palacio:'https://www.editoryhotels.com/',
+ gaia:'https://www.gaiaresidence.pt/'
 };
 const CANC={jupiter:'26 fev',santana:'3 mar',gaia:'4 mar',axisporto:'2 mar',eurostars:'3 mar',
  palacio:'4 mar',vermar:'26 fev',uma:'2 mar',findme:'28 fev'};
@@ -1170,7 +1181,8 @@ HOTELS.forEach(h=>{
     ${h.dir?`<div class="meta" style="color:#0b6e64;font-weight:600">🏷️ Direto no site oficial: ${h.dir.txt} (${h.dir.save})</div>`:''}
     <div class="meta" style="font-style:italic">🤖 «${h.crWhy}»</div>
     ${h.warn?`<div class="warn">⚠️ ${h.warn}</div>`:''}
-    <a href="${BK(h.slug)}" target="_blank">Abrir no Booking ↗</a></div>`;
+    <a href="${BK(h.slug)}" target="_blank">Abrir no Booking ↗</a>
+    ${SITE[h.id]?`<a href="${SITE[h.id]}" target="_blank" style="background:var(--teal);margin-left:6px">Site oficial ↗</a>`:''}</div>`;
   markers[h.id]=L.marker(h.ll,{icon:pinIcon(h),zIndexOffset:1000}).addTo(map).bindPopup(html,{maxWidth:300});
   markers[h.id].on('click',()=>highlightCard(h.id,true));
 });
@@ -1301,7 +1313,7 @@ function buildTable(){
       <td style="white-space:nowrap">${h.ci} → ${h.co}</td>
       <td class="tamen" style="min-width:200px">${h.dir?h.dir.txt+' ('+h.dir.save+')':'—'}</td>
       <td class="tamen">${h.amen.join(' · ')}</td>
-      <td><a class="tlink" href="${BK(h.slug)}" target="_blank">Booking ↗</a></td>
+      <td style="white-space:nowrap"><a class="tlink" href="${BK(h.slug)}" target="_blank">Booking ↗</a>${SITE[h.id]?`<br><a class="tlink" style="background:var(--teal);display:inline-block;margin-top:4px" href="${SITE[h.id]}" target="_blank">Site ↗</a>`:''}</td>
     </tr>`;
   }).join('');
   document.getElementById('bigTable').innerHTML=head+body;
